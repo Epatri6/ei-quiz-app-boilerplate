@@ -141,7 +141,7 @@ function generateQuestionReviewView() {
             </ul>
             <div>
             <p id="count">Score: ${store.score} out of ${store.questions.length}</p>
-            <button id="next">NEXT</button>
+            <button id="next">${(store.questionNumber < store.questions.length - 1) ? 'NEXT' : 'FINISH'}</button>
             </div>
             </div>`;
   return html;
