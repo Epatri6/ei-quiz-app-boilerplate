@@ -100,9 +100,9 @@ function generateQuestionView() {
     <form>
       <ul id="answers">
         <li><input type="radio" name="answer" id="" value="${answers[0]}" checked= "checked"/>${answers[0]}</li>
-        <li><input type="radio" name="answer" id="" value="${answers[1]}" checked= "checked"/>${answers[1]}</li>
-        <li><input type="radio" name="answer" id="" value="${answers[2]}" checked= "checked"/>${answers[2]}</li>
-        <li><input type="radio" name="answer" id="" value="${answers[3]}" checked= "checked"/>${answers[3]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[1]}" />${answers[1]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[2]}" />${answers[2]}</li>
+        <li><input type="radio" name="answer" id="" value="${answers[3]}" />${answers[3]}</li>
       </ul>
       <div>
       <p id="count">Score: ${store.score} out of ${store.questions.length}</p>
@@ -119,7 +119,7 @@ function generateQuestionReviewView(selectedAnswer) {
   <div id="question-page">
   <div id="question-count">Question ${store.questionNumber + 1} of ${store.questions.length}</div>
   <h2 id="question">${question.question}</h2>
-  <h3> You got the question ${(question.answer === selectedAnswer) ? 'correct!' : 'wrong!'}</h3>
+  <h3> You got the question ${(question.correctAnswer === selectedAnswer) ? 'correct!' : 'wrong!'}</h3>
     <ul id="answers-results">`;
     //For each answer, check if it's right or wrong and highlight it appriorately
   question.answers.forEach(answer => {
@@ -192,14 +192,12 @@ function startQuiz() {
 //Submits answer to question, moving to answer review screen
 function submitAnswer(event) {
   event.preventDefault();
-  //Prevent empty answers
-  validateAnswer();
   //Retrieve value of selected radio button
   let answer = findAnswer();
   //Score the answer against the correct answer
   scoreAnswer(answer);
   //Render results
-  renderQuestionReviewView('footer');
+  renderQuestionReviewView(answer);
 }
 
 //Switches view to the next question
@@ -207,7 +205,7 @@ function nextQuestion() {}
 
 //Set up quiz app
 function initialize() {
-  $('main').on('click','input', toggleAnswer); 
+
   $('header h1').text('Course Review Quiz');
   //Starting quiz event
   $('main').on('click', '.start', startQuiz);
@@ -217,23 +215,14 @@ function initialize() {
   $('main').on('click', '#next', nextQuestion);
 
   //Render default screen
-  renderQuestionView();
+  renderStartView();
 }
 
 /********** EVENT HELPER FUNCTIONS **********/
-// toggle function
-function toggleAnswer(){
-  let inputArr = $('input');
-  for(let i = 0; i < inputArr.length; i++){
-    console.log(inputArr[i].attr('checked', 'false'));
-  }
-}
-//Prevent empty answer submissions
-function validateAnswer() {}
 
 //Returns the answer of the selected radio button
 function findAnswer() {
-  
+  return $('input[name=\'answer\']:checked').val();
 }
 
 //Checks the answer against the correct answer and updates score
