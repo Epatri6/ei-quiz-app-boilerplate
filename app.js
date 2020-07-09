@@ -61,7 +61,7 @@ const store = {
   questionNumber: 0,
   score: 0
 };
-
+// renderfunction called with every button clicked buy adding html string 
 /**
  * 
  * Technical requirements:
@@ -122,21 +122,21 @@ function generateQuestionReviewView(selectedAnswer) {
   <h3> You got the question ${(question.answer === selectedAnswer) ? 'correct!' : 'wrong!'}</h3>
     <ul id="answers-results">`;
     //For each answer, check if it's right or wrong and highlight it appriorately
-    question.answers.forEach(answer => {
-      //answer right
-      if(answer === question.correctAnswer) {
-        html += `<li class="correct-answer">${answer}</li>`;
-      }
-      //answer wrong and user selected
-      else if(answer !== question.correctAnswer && answer === selectedAnswer) {
-         html += `<li class="wrong-answer">${answer}</li>`;
-      }
-      //answer wrong
-      else {
-        html += `<li>${answer}</li>`;
-      }
-    });
-    html += `
+  question.answers.forEach(answer => {
+    //answer right
+    if(answer === question.correctAnswer) {
+      html += `<li class="correct-answer">${answer}</li>`;
+    }
+    //answer wrong and user selected
+    else if(answer !== question.correctAnswer && answer === selectedAnswer) {
+      html += `<li class="wrong-answer">${answer}</li>`;
+    }
+    //answer wrong
+    else {
+      html += `<li>${answer}</li>`;
+    }
+  });
+  html += `
 
             </ul>
             <div>
@@ -225,7 +225,7 @@ function initialize() {
 function toggleAnswer(){
   let inputArr = $('input');
   for(let i = 0; i < inputArr.length; i++){
-    console.log(inputArr[i].attr("checked", "false"));
+    console.log(inputArr[i].attr('checked', 'false'));
   }
 }
 //Prevent empty answer submissions
