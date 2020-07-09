@@ -201,7 +201,12 @@ function submitAnswer(event) {
 }
 
 //Switches view to the next question
-function nextQuestion() {}
+function nextQuestion() {
+  store.questionNumber ++;
+  if (store.questionNumber === store.questions.length){
+    renderEndView();
+  } else {renderQuestionView();}
+}
 
 //Set up quiz app
 function initialize() {
